@@ -6,6 +6,7 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.Id;
+//import javax.validation;  add validadccion
 
 import java.util.Date;
 
@@ -15,26 +16,26 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @Getter @Setter public Long id;
 
     @Column (name="fullname", nullable = false)
     @NotNull
-    @Getter @Setter private String fullname;
+    @Getter @Setter private String fullname; //max 60 caracteres
 
-    @Column // campo oblifatorio
+    @Column (name="cpf", nullable = false)  //maximo 11 caracteres
     @Getter @Setter private int cpf;
 
-    @Column
-    @Getter @Setter  private Date datebirth;
+    @Column(name="datebirth")
+    @Getter @Setter  private Date datebirth; //validacion
 
-    @Column
-    @Getter @Setter  private String email;
+    @Column(name="email")
+    @Getter @Setter  private String email; //validacion
 
-    @Column
-    @Getter @Setter  private Gender sex;  //obligatorio
+    @Column (name="sex", nullable = false)
+    @Getter @Setter  private int sex;  //obligatorio
 
-    @Column
+    @Column(name="phone")
     @Getter @Setter  private int phone;
 
     @Column

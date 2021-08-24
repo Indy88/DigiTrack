@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/person")
+@CrossOrigin(origins = "*")
 public class PersonController {
 
    @Autowired
@@ -17,31 +18,29 @@ public class PersonController {
 
 
     @PostMapping(value = "/add")
-//    @RequestMapping(value = "/add",  method = RequestMethod.POST, produces = "application/json")
     public Person addPerson(@RequestBody Person person) {
         return personService.savePerson(person);
     }
-   /* public Person addPerson(Person person) {
-        return personService.savePerson(person);
-    }*/
 
-
-    @RequestMapping(value = "/allPerson", method = RequestMethod.GET,  produces = "application/json")
-
+    @GetMapping (value = "/allPerson")
     public List<Person> getPersons() {
         return personService.findAllPerson();
     }
 
-    @RequestMapping(value = "/person/delete/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 
     public String deletePerson(@PathVariable Long id) {
         return personService.deletePerson(id);
     }
 
-    @RequestMapping(value = "/customers/update", method = RequestMethod.PATCH, produces = "application/json")
-
-    public String updatePerson(Person person) {
+    @PutMapping(value = "/update")
+    public String updatePerson(@PathVariable Person person) {
         return personService.updatePerson(person);
+    }
+
+    @GetMapping(value = "/findById/{id}")
+    public Person findPersonById(@PathVariable Long id){
+      return personService.findPersonById(id);
     }
 
 }

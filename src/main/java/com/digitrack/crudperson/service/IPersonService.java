@@ -10,6 +10,7 @@ public interface IPersonService {
     String updatePerson (Person personUpdated);
     List<Person> findAllPerson();
     String deletePerson(Long id);
+    Person findPersonById(Long id);
 
 
 }

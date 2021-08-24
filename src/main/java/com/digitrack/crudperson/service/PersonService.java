@@ -52,4 +52,11 @@ public class PersonService implements IPersonService{
         return (List<Person>) personRepository.findAll();
     }
 
+    @Override
+    public Person  findPersonById (Long id) {
+      return personRepository.findById(id).get();
+
+    }
+
+
 }
