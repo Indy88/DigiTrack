@@ -3,8 +3,10 @@ package com.digitrack.crudperson.service;
 import com.digitrack.crudperson.entities.Person;
 import com.digitrack.crudperson.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Service
@@ -17,20 +19,18 @@ public class PersonService implements IPersonService{
 
     @Override
     public Person savePerson(Person person) {
-        if (person != null) {
-            return personRepository.save(person);
-        }
-        return new Person();
+      return personRepository.save(person);
     }
 
     /*Delete person*/
     @Override
-    public String deletePerson(Long id) {
+    public boolean deletePerson(Long id) {
+        boolean deleted = false;
         if (personRepository.findById(id).isPresent()) {
             personRepository.deleteById(id);
-            return "Person deleted sucessfully.";
+            deleted = true ;
         }
-        return "Error! Person Not Found";
+        return deleted;
     }
 
 /*    @Override
@@ -58,5 +58,8 @@ public class PersonService implements IPersonService{
 
     }
 
-
+    @Override
+    public Page<Person> getAll(Pageable pageable) {
+        return personRepository.findAll(pageable);
+    }
 }
