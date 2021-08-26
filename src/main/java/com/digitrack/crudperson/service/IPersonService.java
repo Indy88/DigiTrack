@@ -5,14 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IPersonService {
 
     Person savePerson(Person person);
-    String updatePerson (Person personUpdated);
+    Person updatePerson (Person personUpdated);
     List<Person> findAllPerson();
-    boolean  deletePerson(Long id);
-    Person findPersonById(Long id);
+    String deletePerson(Long id);
+    Optional<Person> findPersonById(Long id);
 
     Page<Person> getAll (Pageable pageable);
 

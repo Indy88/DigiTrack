@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService implements IPersonService{
@@ -19,32 +20,29 @@ public class PersonService implements IPersonService{
 
     @Override
     public Person savePerson(Person person) {
-      return personRepository.save(person);
+        if (person != null) {
+            return personRepository.save(person);
+        }
+        return new Person();
     }
 
     /*Delete person*/
     @Override
-    public boolean deletePerson(Long id) {
-        boolean deleted = false;
+    public String deletePerson(Long id) {
         if (personRepository.findById(id).isPresent()) {
             personRepository.deleteById(id);
-            deleted = true ;
+            return "Person deleted successfully.";
         }
-        return deleted;
+        return "Error! Person Not Found";
     }
 
-/*    @Override
-    public List<Person> findAllPerson(){
-        return personRepository.findAll();
-    }*/
-
     @Override
-    public String  updatePerson (Person personUpdated) {
+    public Person updatePerson (Person personUpdated) {
         if (personRepository.findById(personUpdated.id).isPresent()) {
-            personRepository.save(personUpdated);
-            return "Person Updated";
+
+            return personRepository.save(personUpdated);
         }
-        return "Error Updated Person";
+        return null;
     }
 
     @Override
@@ -53,8 +51,8 @@ public class PersonService implements IPersonService{
     }
 
     @Override
-    public Person  findPersonById (Long id) {
-      return personRepository.findById(id).get();
+    public Optional<Person> findPersonById (Long id) {
+      return personRepository.findById(id);
 
     }
 
