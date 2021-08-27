@@ -26,6 +26,14 @@ public class PersonService implements IPersonService{
         return new Person();
     }
 
+    @Override
+    public Person updatePerson (Person personUpdated) {
+        if (personRepository.findById(personUpdated.id).isPresent()) {
+            return personRepository.save(personUpdated);
+        }
+        return new Person();
+    }
+
     /*Delete person*/
     @Override
     public String deletePerson(Long id) {
@@ -36,14 +44,7 @@ public class PersonService implements IPersonService{
         return "Error! Person Not Found";
     }
 
-    @Override
-    public Person updatePerson (Person personUpdated) {
-        if (personRepository.findById(personUpdated.id).isPresent()) {
 
-            return personRepository.save(personUpdated);
-        }
-        return null;
-    }
 
     @Override
     public List<Person> findAllPerson() {

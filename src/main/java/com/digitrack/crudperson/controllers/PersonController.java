@@ -29,6 +29,11 @@ public class PersonController {
         return ResponseEntity.ok().body(personService.savePerson(person));
     }
 
+    @PutMapping
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
+        return ResponseEntity.ok().body(personService.updatePerson(person));
+    }
+
 
     @GetMapping
     public ResponseEntity<Page<Person>> getAllPersons( @RequestParam (defaultValue = "0")int page,
@@ -52,10 +57,6 @@ public class PersonController {
         return ResponseEntity.ok().body("Person deleted");
     }
 
-    @PutMapping(value = "{id}")
-    public ResponseEntity<Person> updatePerson(@PathVariable("id") Long id, @RequestBody Person person) {
-        return ResponseEntity.ok().body(personService.updatePerson(person));
-    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Person> findPersonById(@PathVariable Long id){
