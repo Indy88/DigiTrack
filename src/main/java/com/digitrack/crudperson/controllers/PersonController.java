@@ -2,6 +2,10 @@ package com.digitrack.crudperson.controllers;
 
 import com.digitrack.crudperson.entities.Person;
 import com.digitrack.crudperson.service.PersonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/person")
 public class PersonController {
 
@@ -24,15 +29,27 @@ public class PersonController {
         return ResponseEntity.ok().body(personService.savePerson(person));
     }
 
+
     @GetMapping
-    public ResponseEntity<List<Person>> getPersons() {
-        return ResponseEntity.ok().body(personService.findAllPerson());
+    public ResponseEntity<Page<Person>> getAllPersons( @RequestParam (defaultValue = "0")int page,
+                                                       @RequestParam (defaultValue = "10" )int size, //register per page
+                                                       @RequestParam (defaultValue = "fullname" ) String order,
+                                                       @RequestParam (defaultValue = "true" )boolean asc
+
+    ) {
+        Page <Person> personPage = personService.getAll( PageRequest.of(page, size, Sort.by(order)));
+                if (!asc)
+            personPage = personService.getAll( PageRequest.of(page, size, Sort.by(order).descending())
+        );
+
+     return new ResponseEntity<Page<Person>>(personPage,HttpStatus.OK);
     }
 
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deletePerson(@PathVariable Long id) {
+    public ResponseEntity<?> deletePerson(@PathVariable("id") Long id) {
         personService.deletePerson(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Person deleted");
     }
 
     @PutMapping(value = "{id}")
@@ -49,16 +66,5 @@ public class PersonController {
         return ResponseEntity.notFound().build();
     }
 
- /*   @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        List<ObjectError> errors = ex.getBindingResult().getAllErrors();
-        Map<String, String> map = new HashMap<>(errors.size());
-        errors.forEach((error) -> {
-            String key = ((FieldError) error).getField();
-            String val = error.getDefaultMessage();
-            map.put(key, val);
-        });
-        return ResponseEntity.badRequest().body(map);
-    }*/
 
 }

@@ -5,6 +5,8 @@ import javax.persistence.*;
 //import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -24,7 +26,7 @@ public class Person {
     private String fullname; //max 60 caracteres
 
     @Column (name="cpf", nullable = false)  //maximo 11 caracteres
-    @Size(min = 11, max = 11)
+   // @Size(min = 11, max = 11)
     @NotNull
 	private String cpf;
 
@@ -34,7 +36,7 @@ public class Person {
     private Date datebirth; //validacion
 
     @Column(name="email")
-    @Email()
+   // @Email()
     @NotNull
     private String email; //validacion
 
@@ -64,12 +66,21 @@ public class Person {
     @NotNull
     private String address;
 
+    @Column(name="latitude", nullable = false)
+    @NotNull
+    private int latitude;
+
+    @Column(name="longitude", nullable = false)
+    @NotNull
+    private int longitude;
+
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    @Temporal(TemporalType.DATE)
     private Date created_at;
 
     @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date updated_at;
 
 
