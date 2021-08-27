@@ -33,6 +33,7 @@ public class Person {
     @Column(name="datebirth")
     @NotNull
     @Past
+    @Temporal(TemporalType.DATE)
     private Date datebirth; //validacion
 
     @Column(name="email")
@@ -48,6 +49,7 @@ public class Person {
     private String phone;
 
     @Column(name="description")
+
     private String description;
 
     @Column(name="neighborhood",  nullable = false)
@@ -56,7 +58,7 @@ public class Person {
 
     @Column(name="codeNumber", nullable = false)
     @NotNull
-    private String codeNumber;
+    private int codeNumber;
 
     @Column(name="city", nullable = false)
     @NotNull
