@@ -70,11 +70,11 @@ public class Person {
 
     @Column(name="latitude", nullable = false)
     @NotNull
-    private int latitude;
+    private Double latitude;
 
     @Column(name="longitude", nullable = false)
     @NotNull
-    private int longitude;
+    private Double longitude;
 
     @Column(name = "created_at")
     @CreatedDate
