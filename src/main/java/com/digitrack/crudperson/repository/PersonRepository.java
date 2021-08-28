@@ -19,10 +19,10 @@ public interface PersonRepository  extends PagingAndSortingRepository<Person, Lo
     Page<Person> findAllPerson(Pageable pageable,   @Param("searchText") String searchText);
 
     @Query("From Person p WHERE p.sex=:sex")
-    Page<Person> findBySex(Pageable pageable, @Param("sex") boolean sex);
+    Page<Person> findBySex(Pageable pageable,   @Param("sex") boolean sex);
 
     @Query("From Person p WHERE p.datebirth=:datebirth")
-    Page<Person> findByDatebirth(Pageable pageable, @Param("datebirth") Date datebirth);
+    Page<Person> findByDatebirth(Pageable pageable,   @Param("datebirth") Date datebirth);
 
 
 
