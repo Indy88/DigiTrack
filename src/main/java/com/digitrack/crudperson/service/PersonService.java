@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,11 +49,6 @@ public class PersonService implements IPersonService{
 
 
     @Override
-    public List<Person> findAllPerson() {
-        return (List<Person>) personRepository.findAll();
-    }
-
-    @Override
     public Optional<Person> findPersonById (Long id) {
       return personRepository.findById(id);
 
@@ -61,4 +58,21 @@ public class PersonService implements IPersonService{
     public Page<Person> getAll(Pageable pageable) {
         return personRepository.findAll(pageable);
     }
+
+
+    @Override
+    public Page<Person> findAllPerson (Pageable pageable, String searchText){
+        return personRepository.findAllPerson(pageable, searchText);
+    }
+
+    @Override
+    public Page<Person> findBySex (Pageable pageable, boolean gender){
+        return personRepository.findBySex(pageable, gender);
+    }
+
+    @Override
+    public Page<Person> findByDatebirth (Pageable pageable, Date date){
+        return personRepository.findByDatebirth(pageable, date);
+    }
+
 }

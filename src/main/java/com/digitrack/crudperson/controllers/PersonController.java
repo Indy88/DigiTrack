@@ -4,11 +4,13 @@ import com.digitrack.crudperson.entities.Person;
 import com.digitrack.crudperson.service.PersonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +68,27 @@ public class PersonController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping(value = "/search/{searchText}")
+    public ResponseEntity<Page<Person>> searchAllPerson(Pageable pageable, @PathVariable String searchText ){
+         Page<Person> page = personService.findAllPerson(pageable, searchText);
+        return new ResponseEntity<Page<Person>>(page, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filterSex/{gender}")
+    public ResponseEntity<Page<Person>> filterSex(Pageable pageable, @PathVariable boolean gender ){
+        Page<Person> page = personService.findBySex(pageable, gender);
+        return new ResponseEntity<Page<Person>>(page, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filterDate/{date}")
+    public ResponseEntity<Page<Person>> filterDateBirth(Pageable pageable, @PathVariable Date date ){
+        Page<Person> page = personService.findByDatebirth(pageable, date);
+        return new ResponseEntity<Page<Person>>(page, HttpStatus.OK);
+    }
+
+
+
 
 
 }
